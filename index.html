@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Server with Buttons and Text Field</title>
+  </head>
+  <body>
+    <h1>Server with Buttons and Text Field</h1>
+
+    <input type="text" id="myTextField" placeholder="Enter text here" />
+
+    <button id="button1">Send text</button>
+    <button id="button2">Get Random Number</button>
+
+    <script>
+      async function sendText() {
+        var textFieldValue = document.getElementById("myTextField").value;
+        const response = await fetch("/sendtext", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ text: textFieldValue }),
+        });
+        const data = await response.json();
+        console.log(data);
+      }
+
+      async function getRandomNumber() {
+        const response = await fetch("/random");
+        const data = await response.json();
+        console.log(data);
+      }
+
+      document.getElementById("button1").addEventListener("click", sendText);
+      document.getElementById("button2").addEventListener("click", getRandomNumber);
+    </script>
+  </body>
+</html>
